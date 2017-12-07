@@ -3,8 +3,6 @@ var orm = require('../config/orm.js');
 var burger = {
 	all: function(cb) {
 		orm.selectAll(function(res) {
-			console.log(res);
-			console.log('=========')
 			cb(res);
 		});
 	},

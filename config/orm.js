@@ -12,10 +12,10 @@ function printQuestionMarks(num) {
 
 //define orm methods
 var orm = {
-	selectAll: function() {
+	selectAll: function(cb) {
 		var queryString = "SELECT * FROM burgers";
 		con.query(queryString, function(err, res) {
-			console.log(res);
+			cb(res);
 		});
 	},
 	insertOne: function(table, cols, vals, cb) {

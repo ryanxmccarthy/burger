@@ -12,7 +12,7 @@ function printQuestionMarks(num) {
 
 //define orm methods
 var orm = {
-	selectAll: function(cb) {
+	selectAll: function(table, cb) {
 		var queryString = "SELECT * FROM burgers";
 		con.query(queryString, function(err, res) {
 			cb(res);
@@ -31,10 +31,10 @@ var orm = {
 			cb(res);
 		})
 	},
-	updateOne: function(table, objColVals, condition, cb) {
+	updateOne: function(table, colsVals, condition, cb) {
 		var queryString = 'UPDATE ' + table;
 		queryString += ' SET ';
-		queryString += objToSql(objColVals);
+		queryString += objToSql(colsVals);
 		queryString += ' WHERE ';
 		queryString += condition;
 		con.query(queryString, function(err, res) {

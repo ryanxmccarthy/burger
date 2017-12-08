@@ -1,46 +1,70 @@
-//require sequelize connection
-var con = require('./connection.js');
+var connection = require("../config/connection.js");
 
-//this function creates the requisite number of question marks for the db query
-function printQuestionMarks(num) {
+function questionMarks(num) {
+	var arr = [];
+
+	for (var i = 0; i < num; i++) {
+		arr.push("?");
+	}
+
+	return arr.toString();d
+}
+
+//taken from cats exercise
+function objToSql(ob) {
   var arr = [];
-  for (var i = 0; i < num; i++) {
-    arr.push("?");
+
+  for (var key in ob) {
+    if (Object.hasOwnProperty.call(ob, key)) {
+      arr.push(key + "=" + ob[key]);
+    }
   }
+
   return arr.toString();
 }
 
-//define orm methods
 var orm = {
+	//table (string), cb (function)
 	selectAll: function(table, cb) {
-		var queryString = "SELECT * FROM burgers";
-		con.query(queryString, function(err, res) {
-			cb(res);
+		var queryString = "SELECT * FROM " + table + ";";
+
+		console.log(queryString);
+
+		connection.query(queryString, function(err, result) {
+			if (err) {
+				throw err;
+			}
+
+			cb(result);
 		});
 	},
+	//table (string), cols (array of strings), vals (array of strings), cb (function)
 	insertOne: function(table, cols, vals, cb) {
-		var queryString = 'INSERT INTO ' + table;
-		queryString += ' (';
-		queryString += cols.toString();
-		queryString += ') ';
-		queryString += 'VALUES (';
-		queryString += printQuestionMarks(vals.length);
-		queryString += ') ';
+		var queryString = "INSERT INTO " + table + " (" 
+		+ cols.toString() + ") VALUES (" + questionMarks(vals.length) 
+		+ ");"
 
-		con.query(queryString, vals, function(err, res) {
-			cb(res);
-		})
+		connection.query(queryString, vals, function(err, result) {
+			if (err) {
+				throw err;
+			}
+
+			cb(result);
+		});
 	},
+	//table (string), colsVals (obj from table), condition (string), cb (function)
 	updateOne: function(table, colsVals, condition, cb) {
-		var queryString = 'UPDATE ' + table;
-		queryString += ' SET ';
-		queryString += objToSql(colsVals);
-		queryString += ' WHERE ';
-		queryString += condition;
-		con.query(queryString, function(err, res) {
-			cb(res)
+		var queryString = "UPDATE " + table + " SET " + objToSql(colsVals)
+		+ " WHERE " + condition;
+
+		connection.query(queryString, function(err, result) {
+			if (err) {
+				throw err;
+			}
+
+			cb(result);
 		});
 	}
-};
+}
 
 module.exports = orm;

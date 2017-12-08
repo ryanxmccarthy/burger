@@ -1,10 +1,10 @@
-CREATE DATABASE burgers_db;
-USE burgers_db;
+use ca8njlxf13i4j0n9;
 
-CREATE TABLE burgers (
-	id int(11) AUTO_INCREMENT NOT NULL,
-	burger_name varchar(50) NOT NULL,
-	devoured boolean NOT NULL,
-	burger_date date NOT NULL,
-	PRIMARY KEY (id)
-)
+create table burgers
+(
+	id int auto_increment not null,
+    burger_name varchar(100) not null,
+    devoured boolean default false,
+    createdAt timestamp not null default current_timestamp,
+    primary key (id)
+);

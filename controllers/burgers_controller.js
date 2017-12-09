@@ -15,7 +15,7 @@ router.post("/", function(req, res) {
 	burger.insertOne([
 		"burger_name", "devoured", 'burger_date'
 		], [
-		req.body.name, false, '17/8/12'
+		req.body.name, false, new Date()
 		], function() {
 			res.redirect("/");
 		});

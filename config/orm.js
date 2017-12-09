@@ -38,6 +38,7 @@ var orm = {
 	},
 	//table (string), cols (array of strings), vals (array of strings), cb (function)
 	insertOne: function(table, cols, vals, cb) {
+		console.log(table, cols, vals, cb)
 		var queryString = "INSERT INTO " + table + " (" 
 		+ cols.toString() + ") VALUES (" + questionMarks(vals.length) 
 		+ ");"

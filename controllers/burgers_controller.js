@@ -13,7 +13,7 @@ router.get("/", function(req, res) {
 
 router.post("/", function(req, res) {
 	burger.insertOne([
-		"burger_name", "devoured", 'burger_date'
+		"burger_name", "devoured", "createdAt"
 		], [
 		req.body.name, false, new Date()
 		], function() {

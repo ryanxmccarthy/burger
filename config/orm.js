@@ -28,8 +28,6 @@ var orm = {
 	selectAll: function(table, cb) {
 		var queryString = "SELECT * FROM " + table + ";";
 
-		console.log(queryString);
-
 		connection.query(queryString, function(err, result) {
 			if (err) {
 				throw err;
